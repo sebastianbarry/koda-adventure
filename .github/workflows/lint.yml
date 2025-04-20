@@ -1,0 +1,57 @@
+# .github/workflows/lint.yml
+
+name: Go Linter # Name of the workflow displayed on GitHub
+
+# Controls when the workflow will run
+on:
+  # Trigger the workflow on push or pull request events but only for the main/master branch
+  # push:
+  #   branches: [ "main", "master" ] # Adjust branch names as needed
+  pull_request:
+    branches: [ "main", "master" ] # Trigger for PRs targeting main/master
+    # You can remove the 'branches' filter above if you want it to run on PRs targeting any branch.
+    types: [opened, synchronize, reopened] # Run on PR open, push to PR branch, or reopen
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This job runs the linter
+  golangci-lint:
+    name: Run golangci-lint # Name of the job displayed on GitHub
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner environment
+
+    steps:
+      # Step 1: Check out the code from the repository
+      - name: Check out code
+        uses: actions/checkout@v4 # Use latest major version
+
+      # Step 2: Set up the Go environment
+      - name: Set up Go
+        uses: actions/setup-go@v5 # Use latest major version
+        with:
+          # Use the Go version specified in your go.mod file
+          # Or specify a version explicitly like '1.22'
+          go-version-file: 'go.mod'
+          # Optional: Enable caching for Go build/mod cache
+          cache: true
+
+      # Step 3: Run golangci-lint using the dedicated action
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v6 # Use latest major version
+        with:
+          # Optional: specify the version of golangci-lint (e.g., v1.58.0)
+          # By default, it uses the latest stable version.
+          # version: v1.58
+
+          # Optional: Only show new issues introduced by the PR.
+          # Useful for gradually introducing linting into a project.
+          # only-new-issues: true
+
+          # Optional: Provide custom arguments to golangci-lint
+          # args: --verbose
+
+          # Optional: Set a custom working directory if needed
+          # working-directory: ./src
+
+          # Optional: Enable caching for golangci-lint itself (recommended for speed)
+          # This is often enabled by default in newer versions of the action.
+          cache: true
