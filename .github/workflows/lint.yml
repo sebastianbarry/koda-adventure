@@ -51,7 +51,3 @@ jobs:
 
           # Optional: Set a custom working directory if needed
           # working-directory: ./src
-
-          # Optional: Enable caching for golangci-lint itself (recommended for speed)
-          # This is often enabled by default in newer versions of the action.
-          cache: true
