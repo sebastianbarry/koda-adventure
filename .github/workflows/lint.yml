@@ -31,13 +31,10 @@ jobs:
           # Use the Go version specified in your go.mod file
           # Or specify a version explicitly like '1.22'
           go-version-file: 'go.mod'
-          # Optional: Enable caching for Go build/mod cache
-          cache: true
 
       # Step 3: Run golangci-lint using the dedicated action
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v6 # Use latest major version
-        with:
           # Optional: specify the version of golangci-lint (e.g., v1.58.0)
           # By default, it uses the latest stable version.
           # version: v1.58
