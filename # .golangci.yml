@@ -1,0 +1,43 @@
+# .golangci.yml
+run:
+  # Timeout for analysis, e.g. 5 minutes. Default is 1m.
+  timeout: 5m
+  # Go version to assumes e.g. 1.22. Default is the Go version used to build golangci-lint.
+  # go: '1.22' # Optional - often inferred correctly
+
+linters:
+  # Enable specific linters explicitly. It's generally better to enable only
+  # what you need rather than disabling defaults.
+  enable:
+    - gofmt         # Checks if code is formatted with gofmt.
+    - goimports     # Checks imports and formatting.
+    - revive        # Fast, configurable, opinionated linter. Replaces golint.
+    - govet         # Reports suspicious constructs.
+    - errcheck      # Checks for unchecked errors.
+    - staticcheck   # A suite of static analysis checks.
+    - unused        # Checks for unused code.
+    - ineffassign   # Detects when assignments to variables are not used.
+    - typecheck     # Useful for ensuring code compiles and type checks.
+    # Add more linters as needed...
+  # Disable others if necessary (though enabling specific ones is often clearer)
+  # disable:
+  #  - some-linter
+
+linters-settings:
+  goimports:
+    local-prefixes: github.com/your-org/your-repo # Set your local module prefix
+
+issues:
+  # Exclude specific issues or files
+  exclude-rules:
+    # Example: Exclude errcheck from specific test files
+    - path: _test\.go
+      linters:
+        - errcheck
+    # Example: Exclude a specific directory entirely
+    - path: vendor/.*
+  # Maximum issues of the same type to report. Default is 50.
+  max-same-issues: 50
+
+# Refer to the golangci-lint documentation for all available options:
+# https://golangci-lint.run/usage/configuration/
